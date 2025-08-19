@@ -1,0 +1,157 @@
+public class BST {
+    private Node root;
+
+    public boolean isEmpty() {
+    	return this.root == null;
+    }
+
+    public int altura() {
+    	return altura(this.root);
+    }
+
+    private int altura(Node current) {
+    	if (current == null) return -1;
+	else return 1 + Math.max(altura(current.right), altura(current.left));
+    }
+
+    public Node minimo() {
+    	return minimo(this.root);
+    }
+
+    private Node minimo(Node current){
+    	if(current.left == null) return current;
+	else return minimo(current.left);
+    }
+
+
+    public Node maximo() {
+    	return maximo(this.root);
+    }
+
+    private Node maximo(Node current){
+    	if(current.right == null) return current;
+	else return maximo(current.right);
+    }
+
+    // adicao iterativa
+    public void add(int value){
+    	if(isEmpty()) this.root = new Node(value);
+	else {
+	    Node aux = this.root;
+
+	    while(aux != null) {
+	    	if(aux.value > value) {
+		    if(aux.left == null){
+		    	aux.left = new Node(value);
+			aux.left.parent = aux;
+			return;
+		    }
+		    aux = aux.left;
+		} else {
+		    if(aux.right == null){
+		        aux.right = new Node(value);
+			aux.right.parent = aux;
+			return;
+		    }
+		    aux = aux.right;
+		}
+	    }
+	
+	}
+    }
+
+
+
+    // adicao recursiva
+    public void addRecur(int value){
+    	addRecur(value, this.root);
+    }
+
+    private void addRecur(int value, Node current){
+    	if (current == null) this.root = new Node(value);
+	else {
+	    if(value > current.value) {
+	    	if(node.right == null) {
+		    node.right = new Node(value);
+		    node.right.parent = current;
+		    return;
+		}
+		addRecur(value, current.right);
+	    } else {
+	    	if(node.left == null) {
+		    node.left = new Node(value);
+		    node.left.parent = current;
+		    return;
+		}
+		addRecur(value, current.left);
+	    
+	    
+	    }
+	}
+    }
+
+
+    public Node search(int k){
+    	return search(k, this.root);
+    }
+
+    private Node search(int k, Node current){
+    	if(current.value == k) return current;
+	else if(current.value > k) return search(k, current.left);
+	else if(current.value < k) return search(k, current.right);
+	else return null;
+    }
+
+
+    public Node sucessor(int k){
+    
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Node {
+    int value;
+    Node left;
+    Node right;
+    Node parent;
+
+
+    public Node(int v) {
+    	this.value = v;
+    }
+
+
+    public boolean isLeaf() {
+    	return this.left == null && this.right == null;
+    }
+
+    public boolean hasTwochilds() {
+    	return this.left != null && this.right != null;
+    }
+
+    public boolean hasOnlyLeftchild() {
+    	return this.left != null && this.right == null;
+    }
+
+    public boolean hasOnlyRightchild() {
+    	return this.left == null && this.right != null;
+    }
+}
