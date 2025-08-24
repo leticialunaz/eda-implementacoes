@@ -116,6 +116,57 @@ public class BST {
 	}
     }
 
+
+    public void remove(int value){
+    	Node toRemove = search(value);
+	if(toRemove != null) remove(toRemove);
+    }
+
+
+
+    private void remove(Node toRemove){
+	if(toRemove.isLeaf()){
+	    if(toRemove == this.root) this.root = null;
+	    else{
+	    	if(toRemove.value > toRemove.parent.value){
+		    toRemove.parent.right = null;
+		} else {
+		    toRemove.parent.left = null;
+		}
+	    }
+	} else if(toRemove.hasOnlyRightChild()){
+	    if(toRemove == this.root){
+	    	this.root = toRemove.right;
+		this.root.parent = null;
+	    } else {
+	    	if(toRemove.right.value > toRemove.parent.value){
+		    toRemove.parent.right = toRemove.right;
+		} else{
+		    toRemove.parent.left = toRemove.right;
+		}
+		toRemove.right.parent = toRemove.parent;
+	    }
+	} else if(toRemove.hasOnlyLeftChild()){
+	    if(toRemove == this.root){
+	    	this.root = toRemove.left;
+		this.root.parent = null;
+	    } else {
+	        if(toRemove.left.value > toRemove.parent.value){
+		    toRemove.parent.right = toRemove.left;		   
+		} else {
+		    toRemove.parent.left = toRemove.left;
+		}
+		toRemove.left.parent = toRemove.parent;
+	    }
+	}
+
+    	else{
+	    Node sucessor = sucessor(toRemove);
+	    toRemove.value = sucessor.value;
+	    remove(sucessor);
+	}
+    }
+
 }
 
 

@@ -103,8 +103,17 @@ public class BST {
     }
 
 
-    public Node sucessor(int k){
-    
+    public Node sucessor(Node current){
+	if(current == null) return null;
+
+	if(current.right != null) return min(current.right);
+	else {
+	    Node aux = current.parent;
+
+	    while(aux != null && current.value > aux.value)
+		aux = aux.parent;
+	    return aux;
+	}
     }
 
 }
