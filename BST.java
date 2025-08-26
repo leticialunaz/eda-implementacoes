@@ -119,7 +119,7 @@ public class BST {
 
     public void remove(int value){
     	Node toRemove = search(value);
-	if(toRemove != null) remove(toRemove);
+		if(toRemove != null) remove(toRemove);
     }
 
 
@@ -207,16 +207,44 @@ public class BST {
     public boolean equals(BST other){
     	return other.preOrdem() == this.preOrdem();
     }
+
+	public int contaFolhas(){
+		if(isEmpty()) return 0;
+		return contaFolhas(this.root);
+	}
+
+	private int contaFolhas(Node node){
+		if(node == null) return 0;
+		if(node.isLeaf()) return 1;
+		else return contaFolhas(node.left) + contaFolhas(node.right);
+	}
+
+	public int contaNos(){
+		if(isEmpty()) return 0;
+		return contaNos(this.root);
+	}
+
+	private int contaNos(Node node){
+		if(node == null) return 0;
+		else return 1 + contaNos(node.left) + contaNos(node.right);
+	}
+
+	public void printBFS(){
+		Deque<Node> queue = new LinkedList<Node>();
+
+		if(!isEmpty()){
+			queue.addLast(this.root);
+			while(!queue.isEmpty()){
+				Node current = queue.removeFirst();
+
+				System.out.println(current);
+
+				if(current.left != null) queue.addLast(current.left);
+				if(currrent.right != null) queue.addLast(current.right);
+			}
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
 
 
 
