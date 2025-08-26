@@ -167,6 +167,46 @@ public class BST {
 	}
     }
 
+    public void preOrdem(){
+    	preOrdem(this.root);
+    }
+
+    private void preOrdem(Node node){
+    	if(node != null){
+	    System.out.println(node.value);
+	    preOrdem(node.left);
+	    preOrdem(node.right);
+	}
+    }
+    
+    public void emOrdem(){
+    	emOrdem(this.root);
+    }
+
+    private void emOrdem(Node node){
+    	if(node != null){
+	    preOrdem(node.left);
+	    System.out.println(node.value);
+	    preOrdem(node.right);
+	}
+    }
+    
+    public void posOrdem(){
+    	posOrdem(this.root);
+    }
+
+    private void posOrdem(Node node){
+    	if(node != null){
+	    preOrdem(node.left);
+	    preOrdem(node.right);
+	    System.out.println(node.value);
+	}
+    }
+
+
+    public boolean equals(BST other){
+    	return other.preOrdem() == this.preOrdem();
+    }
 }
 
 
