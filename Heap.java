@@ -59,6 +59,13 @@ public class Heap {
     }
 
 
+    public void buildHeap(){
+	for(int i = parent(tail); i >= 0; i--){
+	    heapify(i)	;
+	}
+    }
+
+
     public int maxIndex(int index, int right, int left){
     	if(isValidIndex(left) && this.heap[index] > this.heap[left]){
 	    if(isValidIndex(right) && this.heap[index] > this.heap[right])
