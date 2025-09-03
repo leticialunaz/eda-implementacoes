@@ -1,4 +1,4 @@
-public class BST {
+public class AVL {
     private Node root;
 
     public boolean isEmpty() {
@@ -44,6 +44,7 @@ public class BST {
 		    if(aux.left == null){
 		    	aux.left = new Node(value);
 			aux.left.parent = aux;
+			aux = aux.left;
 			return;
 		    }
 		    aux = aux.left;
@@ -51,13 +52,52 @@ public class BST {
 		    if(aux.right == null){
 		        aux.right = new Node(value);
 			aux.right.parent = aux;
+			aux = aux.right;
 			return;
 		    }
 		    aux = aux.right;
 		}
 	    }
-	
+	    rotaciona(aux);
 	}
+    }
+
+
+	public void rotaciona(Node current){
+	    Node y = current.parent;
+	    Node x = y.parent;
+	    if(x.isLeftPending() && y.left == curent) rotateRight(x);
+	    else if(x.isRightPending && y.right == current) rotateLeft(x);
+	    else if(current.value < y.value && y.value > x.value && !x.isBalanced()){
+	    	rotateRight(y);
+		rotateLeft(x);
+	    } else {
+	    	rotateLeft(y);
+		rotateRight(x);
+	    }
+		
+		
+	    }
+	}
+
+
+
+
+    public void rotateRight(int w){
+    	int x = w.left;
+	int r = x.right;
+	w.left = r;
+	x.right = w;
+	w.parent = x;
+    }
+
+    public void rotateLeft(int w){
+	int x = w.right;
+	int h = x.left;
+	w.right = h;
+	x.left = w;
+	w.parent = x;
+
     }
 
 
@@ -185,9 +225,9 @@ public class BST {
 
     private void emOrdem(Node node){
     	if(node != null){
-	    preOrdem(node.left);
+	    emOrdem(node.left);
 	    System.out.println(node.value);
-	    preOrdem(node.right);
+	    emOrdem(node.right);
 	}
     }
     
@@ -197,8 +237,8 @@ public class BST {
 
     private void posOrdem(Node node){
     	if(node != null){
-	    preOrdem(node.left);
-	    preOrdem(node.right);
+	    posOrdem(node.left);
+	    posOrdem(node.right);
 	    System.out.println(node.value);
 	}
     }
@@ -208,46 +248,40 @@ public class BST {
     	return other.preOrdem() == this.preOrdem();
     }
 
-	public int contaFolhas(){
-		if(isEmpty()) return 0;
-		return contaFolhas(this.root);
+    public int contaFolhas(){
+	if(isEmpty()) return 0;
+	return contaFolhas(this.root);
+    }
+
+    private int contaFolhas(Node node){
+	if(node == null) return 0;
+	if(node.isLeaf()) return 1;
+	else return contaFolhas(node.left) + contaFolhas(node.right);
+    }
+
+    public int contaNos(){
+	if(isEmpty()) return 0;
+	return contaNos(this.root);
+    }
+
+    private int contaNos(Node node){
+	if(node == null) return 0;
+	else return 1 + contaNos(node.left) + contaNos(node.right);
+    }
+
+    public void printBFS(){
+	Deque<Node> queue = new LinkedList<Node>();
+	if(!isEmpty()){
+       	    queue.addLast(this.root);
+   	    while(!queue.isEmpty()){
+		Node current = queue.removeFirst();
+                System.out.println(current);
+		if(current.left != null) queue.addLast(current.left);
+		if(currrent.right != null) queue.addLast(current.right);
+       	    }
 	}
-
-	private int contaFolhas(Node node){
-		if(node == null) return 0;
-		if(node.isLeaf()) return 1;
-		else return contaFolhas(node.left) + contaFolhas(node.right);
-	}
-
-	public int contaNos(){
-		if(isEmpty()) return 0;
-		return contaNos(this.root);
-	}
-
-	private int contaNos(Node node){
-		if(node == null) return 0;
-		else return 1 + contaNos(node.left) + contaNos(node.right);
-	}
-
-	public void printBFS(){
-		Deque<Node> queue = new LinkedList<Node>();
-
-		if(!isEmpty()){
-			queue.addLast(this.root);
-			while(!queue.isEmpty()){
-				Node current = queue.removeFirst();
-
-				System.out.println(current);
-
-				if(current.left != null) queue.addLast(current.left);
-				if(currrent.right != null) queue.addLast(current.right);
-			}
-		}
-	}
+    }
 }
-
-
-
 
 
 
@@ -289,7 +323,18 @@ class Node {
     }
 
     public int balance(Node n){
-    	return height(n.left) - height(n.right);
+	if(left != null){
+	    int altEsq = left.height;
+	} else{	
+	    int altEsq = -1;
+	} 
+
+	if(right != null){
+            int altDir = right.height;
+	} else {
+	    int altDir = -1;
+	}
+    	return altEsq - altDir;
     }
 
     public boolean isLeftPending(){
