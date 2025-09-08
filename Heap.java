@@ -21,7 +21,7 @@ public class Heap {
     }
 
     public int parent(int indice){
-        return int((indice - 2)/2);
+        return int((indice - 1)/2);
     }
 
     public void add(int elemento){
@@ -67,22 +67,31 @@ public class Heap {
 
 
     public int maxIndex(int index, int right, int left){
-    	if(isValidIndex(left) && this.heap[index] > this.heap[left]){
-	    if(isValidIndex(right) && this.heap[index] > this.heap[right])
-	    	return index;
-	    else if(isValidIndex(right) && this.heap[index] < this.heap[right])
-		return right;
-	    else
-		return index;
+		int max = index;
 
-	} else if(isValidIndex(left) && this.heap[index] < this.heap[left]){
-	    if(isValidIndex(right) && this.heap[index] > this.heap[right])
-		return left;
-	    else if(isValidIndex(right) && this.heap[left] < this.heap[right])
-		return right;
-	}   else
-		return left;
-	return index;		
+		if(heap[right(index)] > heap[max])
+			max = right;
+		if(heap[left(index)] > heap[max])
+			max = left;
+
+		return max;
+
+    // 	if(isValidIndex(left) && this.heap[index] > this.heap[left]){
+	//     if(isValidIndex(right) && this.heap[index] > this.heap[right])
+	//     	return index;
+	//     else if(isValidIndex(right) && this.heap[index] < this.heap[right])
+	// 	return right;
+	//     else
+	// 	return index;
+
+	// } else if(isValidIndex(left) && this.heap[index] < this.heap[left]){
+	//     if(isValidIndex(right) && this.heap[index] > this.heap[right])
+	// 	return left;
+	//     else if(isValidIndex(right) && this.heap[left] < this.heap[right])
+	// 	return right;
+	// }   else
+	// 	return left;
+		return max;		
     }
 
 
@@ -91,14 +100,14 @@ public class Heap {
     }
 
     public boolean isLeaf(int index){
-    	return (index > parent(index) && index <= tail);
+    	return (index > parent(tail) && index <= tail);
     }
 
 
 
     public void swap(int i, int j){
     	int aux = this.heap[i];
-	this.heap[i] = this.heap[j];
-	this.heap[j] = aux;
+		this.heap[i] = this.heap[j];
+		this.heap[j] = aux;
     }
 }
