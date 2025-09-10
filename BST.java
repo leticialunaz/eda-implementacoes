@@ -167,15 +167,14 @@ public class BST {
 	}
     }
 
-    public void preOrdem(){
-    	preOrdem(this.root);
+    public String preOrdem(){
+    	preOrdem(this.root).trim;
     }
 
-    private void preOrdem(Node node){
-    	if(node != null){
-	    System.out.println(node.value);
-	    preOrdem(node.left);
-	    preOrdem(node.right);
+    private String preOrdem(Node node){
+    	if(node == null) return "";
+
+		return node.value + " " + preOrdem(node.left) + preOrdem(node.right);
 	}
     }
     
@@ -205,7 +204,7 @@ public class BST {
 
 
     public boolean equals(BST other){
-    	return other.preOrdem() == this.preOrdem();
+    	return other.preOrdem().equals(this.preOrdem());
     }
 
 	public int contaFolhas(){
