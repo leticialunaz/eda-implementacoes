@@ -184,9 +184,9 @@ public class BST {
 
     private void emOrdem(Node node){
     	if(node != null){
-	    preOrdem(node.left);
+	    emOrdem(node.left);
 	    System.out.println(node.value);
-	    preOrdem(node.right);
+	    emOrdem(node.right);
 	}
     }
     
@@ -196,8 +196,8 @@ public class BST {
 
     private void posOrdem(Node node){
     	if(node != null){
-	    preOrdem(node.left);
-	    preOrdem(node.right);
+	    posOrdem(node.left);
+	    posOrdem(node.right);
 	    System.out.println(node.value);
 	}
     }
