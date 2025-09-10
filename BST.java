@@ -168,7 +168,7 @@ public class BST {
     }
 
     public String preOrdem(){
-    	preOrdem(this.root).trim;
+    	return preOrdem(this.root).trim();
     }
 
     private String preOrdem(Node node){
@@ -176,7 +176,7 @@ public class BST {
 
 		return node.value + " " + preOrdem(node.left) + preOrdem(node.right);
 	}
-    }
+    
     
     public void emOrdem(){
     	emOrdem(this.root);
